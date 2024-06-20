@@ -1,0 +1,43 @@
+<div class="form-container">
+  <h2>Survey Form</h2>
+  <form (ngSubmit)="handleSubmit()">
+    <div class="question-block">
+      <p class="question">{{ currentQuestion.question }}</p>
+      <div class="options" *ngIf="currentQuestion.options">
+        <label *ngFor="let option of currentQuestion.options; let i = index">
+          <input
+            type="{{ currentQuestion.singleSelect ? 'radio' : 'checkbox' }}"
+            [name]="'question_' + currentQuestionIndex"
+            [value]="option"
+            (change)="handleAnswerChange($event)"
+          />
+          {{ option }}
+        </label>
+      </div>
+
+      <input
+        *ngIf="!currentQuestion.options"
+        type="text"
+        class="text-input"
+        placeholder="Type your answer here..."
+      />
+    </div>
+
+    <div class="navigation-buttons">
+      <button
+        type="button"
+        *ngIf="currentQuestionIndex > 0"
+        (click)="prevQuestion()"
+      >
+        Previous
+      </button>
+      <button
+        type="submit"
+        *ngIf="currentQuestionIndex === questions.length - 1"
+      >
+        Submit
+      </button>
+      <button type="button" (click)="nextQuestion()">Next</button>
+    </div>
+  </form>
+</div>
